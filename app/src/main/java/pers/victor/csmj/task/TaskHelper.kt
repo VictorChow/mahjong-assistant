@@ -1,10 +1,10 @@
 package pers.victor.csmj.task
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import pers.victor.csmj.task.entity.Hu
 import pers.victor.csmj.task.entity.PayResult
 import pers.victor.csmj.task.entity.People
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import pers.victor.ext.spGetString
 import pers.victor.ext.spRemove
 import pers.victor.ext.spSetString
@@ -15,10 +15,12 @@ import kotlin.math.abs
  */
 class TaskHelper {
     companion object {
-        private const val KEY = "TaskHelperPeople"
+        private const val KEY_PEOPLE = "TaskHelperPeople"
+        private const val KEY_HISTORY = "TaskHelperHistory"
     }
 
     private val people = arrayListOf<People>()
+    private val history = arrayListOf<String>()
     private val gson = Gson()
 
     fun start(names: List<String>) {
@@ -33,7 +35,11 @@ class TaskHelper {
         save()
     }
 
+    fun isStarted() = people.isNotEmpty()
+
     fun hu(hu: Hu) {
+        history.add(gson.toJson(people))
+
         if (hu.loser == hu.winner) {
             //自摸
             people.filter { it != hu.winner }
@@ -76,22 +82,42 @@ class TaskHelper {
     }
 
     private fun save() {
-        spSetString(KEY, gson.toJson(people))
+        spSetString(KEY_PEOPLE, gson.toJson(people))
+        spSetString(KEY_HISTORY, gson.toJson(history))
     }
 
     fun restore() {
         people.apply {
             clear()
-            addAll(gson.fromJson(spGetString(KEY), object : TypeToken<List<People>>() {}.type))
+            addAll(parse(spGetString(KEY_PEOPLE)))
+        }
+        history.apply {
+            clear()
+            addAll(parse(spGetString(KEY_HISTORY)))
         }
     }
 
+    fun rollback(): Boolean {
+        if (history.isEmpty()) {
+            return false
+        }
+        val lastPeople = history[history.lastIndex]
+        people.apply {
+            clear()
+            addAll(parse(lastPeople))
+        }
+        history.removeAt(history.lastIndex)
+        save()
+        return true
+    }
+
     fun checkRestore(): Boolean {
-        if (spGetString(KEY).isEmpty()) {
+        if (spGetString(KEY_PEOPLE).isEmpty()) {
             return false
         }
         return try {
-            gson.fromJson<List<People>>(spGetString(KEY), object : TypeToken<List<People>>() {}.type)
+            parse<List<People>>(spGetString(KEY_PEOPLE))
+            parse<List<String>>(spGetString(KEY_HISTORY))
             true
         } catch (e: Exception) {
             false
@@ -99,7 +125,8 @@ class TaskHelper {
     }
 
     fun end(): String {
-        spRemove(KEY)
+        spRemove(KEY_PEOPLE)
+        spRemove(KEY_HISTORY)
 
         val list = people.filter { it.points != 0 }.partition { it.points > 0 }
         val winners = list.first
@@ -124,9 +151,7 @@ class TaskHelper {
         return results.joinToString("\n") { it.toString() }
     }
 
-    fun log() {
-
-    }
-
     fun getPeople(): List<People> = people
+
+    private inline fun <reified T> parse(json: String): T = gson.fromJson(json, object : TypeToken<T>() {}.type)
 }

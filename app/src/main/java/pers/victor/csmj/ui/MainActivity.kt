@@ -2,6 +2,8 @@ package pers.victor.csmj.ui
 
 import android.os.Bundle
 import android.text.InputType
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -20,13 +22,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        click(tv_hu, tv_settle, tv_start)
+        if (supportActionBar == null) {
+            toast("supportActionBar为null，部分功能无法使用")
+        } else {
+        }
+
+        click(tv_hu, tv_start)
 
         views.forEach {
             val tv = it
             tv.click {
-
-                if (helper.getPeople().isNotEmpty()) {
+                if (helper.isStarted()) {
                     return@click
                 }
 
@@ -56,7 +62,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     .setMessage("检测到有未完成的对局，是否恢复？")
                     .setCancelable(false)
                     .setPositiveButton("嗯", { _, _ ->
-                        ll_hu.visiable()
+                        tv_hu.visiable()
                         tv_start.invisiable()
                         helper.restore()
                         updatePoints()
@@ -80,17 +86,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v) {
             tv_hu -> huDialog.show()
-            tv_settle -> AlertDialog.Builder(this)
-                    .setTitle("提示")
-                    .setMessage("确定要结算？")
-                    .setPositiveButton("嗯", { _, _ ->
-                        AlertDialog.Builder(this)
-                                .setTitle("结算")
-                                .setMessage(helper.end())
-                                .setCancelable(false)
-                                .show()
-                    })
-                    .show()
             tv_start -> start()
         }
     }
@@ -101,7 +96,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             toast("先填名字")
             return
         }
-        ll_hu.visiable()
+        tv_hu.visiable()
         tv_start.invisiable()
 
         helper.start(views.map { it.text.toString() })
@@ -116,5 +111,52 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun updatePoints() {
         views.zip(helper.getPeople()).forEach { it.first.text = it.second.toString() }
+    }
+
+    override fun onBackPressed() {
+        toast("不能退")
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.home_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (!helper.isStarted()) {
+            toast("先开局")
+            return false
+        }
+        when (item.itemId) {
+            R.id.menu_rollback -> {
+                AlertDialog.Builder(this)
+                        .setTitle("提示")
+                        .setMessage("确定要回退？")
+                        .setPositiveButton("嗯", { _, _ ->
+                            val r = helper.rollback()
+                            if (r) {
+                                toast("回退成功")
+                                updatePoints()
+                            } else {
+                                toast("回退失败")
+                            }
+                        })
+                        .show()
+            }
+            R.id.menu_finish -> {
+                AlertDialog.Builder(this)
+                        .setTitle("提示")
+                        .setMessage("确定要结算？")
+                        .setPositiveButton("嗯", { _, _ ->
+                            AlertDialog.Builder(this)
+                                    .setTitle("结算")
+                                    .setMessage(helper.end())
+                                    .setCancelable(false)
+                                    .show()
+                        })
+                        .show()
+            }
+        }
+        return true
     }
 }
