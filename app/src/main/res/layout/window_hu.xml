@@ -10,10 +10,11 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:background="#eee"
             android:gravity="center"
-            android:text="胡" />
+            android:text="胡"
+            android:textSize="15sp" />
 
         <RadioGroup
             android:id="@+id/rg_hu"
@@ -24,10 +25,11 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:background="#eee"
             android:gravity="center"
-            android:text="类型" />
+            android:text="类型"
+            android:textSize="15sp" />
 
         <RadioGroup
             android:id="@+id/rg_type"
@@ -40,31 +42,30 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="小胡" />
+                android:text="小胡"
+                android:textSize="15sp" />
 
             <RadioButton
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="大胡" />
+                android:text="大胡"
+                android:textSize="15sp" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="2" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
         </RadioGroup>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:background="#eee"
             android:gravity="center"
-            android:text="点炮" />
+            android:text="点炮"
+            android:textSize="15sp" />
 
         <RadioGroup
             android:id="@+id/rg_way"
@@ -75,10 +76,11 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:background="#eee"
             android:gravity="center"
-            android:text="鸟1" />
+            android:text="鸟1"
+            android:textSize="15sp" />
 
         <RadioGroup
             android:id="@+id/rg_bird1"
@@ -89,10 +91,11 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:background="#eee"
             android:gravity="center"
-            android:text="鸟2" />
+            android:text="鸟2"
+            android:textSize="15sp" />
 
         <RadioGroup
             android:id="@+id/rg_bird2"
@@ -103,10 +106,11 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:background="#eee"
             android:gravity="center"
-            android:text="庄家" />
+            android:text="庄家"
+            android:textSize="15sp" />
 
         <RadioGroup
             android:id="@+id/rg_dealer"
@@ -117,8 +121,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/colorPrimary" />
+            android:layout_height="15dp"
+            android:background="#eee" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,8 +135,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="不"
-                android:textColor="@color/colorPrimary" />
+                android:text="否"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/tv_ok"
@@ -142,12 +147,9 @@
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:text="嗯"
-                android:textColor="#fff" />
+                android:textColor="#fff"
+                android:textSize="15sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/colorPrimary" />
     </LinearLayout>
 </ScrollView>

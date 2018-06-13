@@ -42,22 +42,22 @@ class TaskHelper {
 
         if (hu.loser == hu.winner) {
             //自摸
-            people.filter { it != hu.winner }
+            people.filter { it.name != hu.winner }
                     .forEach {
                         var points = if (hu.type == 0) 2 else 8
                         if (hu.winner == hu.dealer) {
                             points = points shl 1
                         }
-                        if (it == hu.dealer) {
+                        if (it.name == hu.dealer) {
                             points = points shl 1
                         }
-                        if (hu.birds[0] == hu.winner || hu.birds[0] == it) {
+                        if (hu.birds[0] == hu.winner || hu.birds[0] == it.name) {
                             points = points shl 1
                         }
-                        if (hu.birds[1] == hu.winner || hu.birds[1] == it) {
+                        if (hu.birds[1] == hu.winner || hu.birds[1] == it.name) {
                             points = points shl 1
                         }
-                        hu.winner.points += points
+                        people.first { it.name == hu.winner }.points += points
                         it.points -= points
                     }
         } else {
@@ -74,8 +74,8 @@ class TaskHelper {
             if (hu.birds[1] == hu.winner || hu.birds[1] == hu.loser) {
                 points = points shl 1
             }
-            hu.winner.points += points
-            hu.loser.points -= points
+            people.first { it.name == hu.winner }.points += points
+            people.first { it.name == hu.loser }.points -= points
         }
 
         save()
@@ -127,6 +127,10 @@ class TaskHelper {
     fun end(): String {
         spRemove(KEY_PEOPLE)
         spRemove(KEY_HISTORY)
+
+        if (people.all { it.points == 0 }) {
+            return "所有人不输不赢，浪费时间！"
+        }
 
         val list = people.filter { it.points != 0 }.partition { it.points > 0 }
         val winners = list.first

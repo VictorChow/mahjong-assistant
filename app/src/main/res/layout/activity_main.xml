@@ -1,81 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tv_4"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_gravity="center_vertical"
-            android:background="#ddd"
-            android:gravity="center"
-            android:hint="点我"
-            android:orientation="vertical" />
-
-        <TextView
-            android:id="@+id/tv_2"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_gravity="end|center_vertical"
-            android:background="#ddd"
-            android:gravity="center"
-            android:hint="点我"
-            android:orientation="vertical" />
-
-        <TextView
-            android:id="@+id/tv_3"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_gravity="center_horizontal"
-            android:background="#ddd"
-            android:gravity="center"
-            android:hint="点我"
-            android:orientation="vertical" />
-
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_1"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="#ddd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#607D8B"
             android:gravity="center"
             android:hint="点我"
-            android:orientation="vertical" />
+            android:textColor="#fff"
+            android:textColorHint="#fff"
+            android:textSize="40sp" />
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/tv_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#448AFF"
+            android:gravity="center"
+            android:hint="点我"
+            android:textColor="#fff"
+            android:textColorHint="#fff"
+            android:textSize="40sp" />
+    </LinearLayout>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#448AFF"
+            android:gravity="center"
+            android:hint="点我"
+            android:textColor="#fff"
+            android:textColorHint="#fff"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/tv_4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#607D8B"
+            android:gravity="center"
+            android:hint="点我"
+            android:textColor="#fff"
+            android:textColorHint="#fff"
+            android:textSize="40sp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_hu"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="100dp"
         android:background="@color/colorPrimary"
         android:gravity="center"
         android:text="胡"
         android:textColor="#fff"
-        android:visibility="invisible"
+        android:textSize="40dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
         android:id="@+id/tv_start"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="100dp"
         android:background="@color/colorPrimary"
         android:gravity="center"
         android:text="开局"
         android:textColor="#fff"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

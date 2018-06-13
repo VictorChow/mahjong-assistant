@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     .setCancelable(false)
                     .setPositiveButton("嗯", { _, _ ->
                         tv_hu.visiable()
-                        tv_start.invisiable()
+                        tv_start.gone()
                         helper.restore()
                         updatePoints()
 
@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             return
         }
         tv_hu.visiable()
-        tv_start.invisiable()
+        tv_start.gone()
 
         helper.start(views.map { it.text.toString() })
         huDialog = HuDialog(this) {
@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updatePoints() {
-        views.zip(helper.getPeople()).forEach { it.first.text = it.second.toString() }
+        views.zip(helper.getPeople()).forEach { it.first.text = "${it.second.name}\n${it.second.points}" }
     }
 
     override fun onBackPressed() {
@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                                 toast("回退成功")
                                 updatePoints()
                             } else {
-                                toast("回退失败")
+                                toast("退到头了")
                             }
                         })
                         .show()
@@ -149,7 +149,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         .setMessage("确定要结算？")
                         .setPositiveButton("嗯", { _, _ ->
                             AlertDialog.Builder(this)
-                                    .setTitle("结算")
+                                    .setTitle("交易时间")
                                     .setMessage(helper.end())
                                     .setCancelable(false)
                                     .show()
